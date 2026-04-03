@@ -1,50 +1,66 @@
 [
   {
     "entityId": "device_0",
-    "entityType": "device",
     "risk_score": 100.0,
-    "risk_level": "critical"
-  },
-  {
-    "entityId": "user_3",
-    "entityType": "user",
-    "risk_score": 77.2,
-    "risk_level": "high"
-  },
-  {
-    "entityId": "device_2",
-    "entityType": "device",
-    "risk_score": 75.1,
-    "risk_level": "high"
-  },
-  {
-    "entityId": "user_1",
-    "entityType": "user",
-    "risk_score": 69.8,
-    "risk_level": "high"
-  },
-  {
-    "entityId": "user_0",
-    "entityType": "user",
-    "risk_score": 62.2,
-    "risk_level": "high"
-  },
-  {
-    "entityId": "user_2",
-    "entityType": "user",
-    "risk_score": 55.2,
-    "risk_level": "medium"
-  },
-  {
-    "entityId": "user_4",
-    "entityType": "user",
-    "risk_score": 54.0,
-    "risk_level": "medium"
+    "risk_level": "critical",
+    "total_logs": 7,
+    "anomaly_count": 3,
+    "_id": "69cfc370867b73ceafecac3a"
   },
   {
     "entityId": "device_1",
-    "entityType": "device",
-    "risk_score": 46.4,
-    "risk_level": "medium"
+    "risk_score": 100.0,
+    "risk_level": "critical",
+    "total_logs": 6,
+    "anomaly_count": 1,
+    "_id": "69cfc370867b73ceafecac3b"
+  },
+  {
+    "entityId": "device_2",
+    "risk_score": 100.0,
+    "risk_level": "critical",
+    "total_logs": 7,
+    "anomaly_count": 1,
+    "_id": "69cfc370867b73ceafecac3c"
+  },
+  {
+    "entityId": "user_0",
+    "risk_score": 100.0,
+    "risk_level": "critical",
+    "total_logs": 9,
+    "anomaly_count": 1,
+    "_id": "69cfc370867b73ceafecac3d"
+  },
+  {
+    "entityId": "user_1",
+    "risk_score": 100.0,
+    "risk_level": "critical",
+    "total_logs": 6,
+    "anomaly_count": 2,
+    "_id": "69cfc370867b73ceafecac3e"
+  },
+  {
+    "entityId": "user_2",
+    "risk_score": 100.0,
+    "risk_level": "critical",
+    "total_logs": 7,
+    "anomaly_count": 1,
+    "_id": "69cfc370867b73ceafecac3f"
+  },
+  {
+    "entityId": "user_3",
+    "risk_score": 100.0,
+    "risk_level": "critical",
+    "total_logs": 6,
+    "anomaly_count": 2,
+    "_id": "69cfc370867b73ceafecac40"
+  },
+  {
+    "entityId": "user_4",
+    "risk_score": 100.0,
+    "risk_level": "critical",
+    "total_logs": 12,
+    "anomaly_count": 1,
+    "_id": "69cfc370867b73ceafecac41"
   }
 ]

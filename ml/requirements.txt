@@ -1,4 +1,7 @@
-fastapi
-uvicorn
+flask
+pymongo
 scikit-learn
 pandas
+numpy
+python-dotenv
+dnspython
