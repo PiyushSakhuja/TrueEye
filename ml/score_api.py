@@ -7,7 +7,7 @@ from datetime import datetime
 load_dotenv()
 
 app = Flask(__name__)
-
+app.config["PROPAGATE_EXCEPTIONS"] = True
 # FIX: read MongoDB URI from env, not hardcoded
 MONGO_URI = os.getenv(
     "MONGO_URI",
@@ -186,4 +186,4 @@ def retrain():
 
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=5000, debug=True, use_reloader=False)

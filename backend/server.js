@@ -2,11 +2,24 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const http = require("http");
+const path = require("path");
 const { Server } = require("socket.io");
 require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);  // wrap express in http server
+const frontendDir = path.join(__dirname, "..", "frontend");
+const frontendFiles = new Set([
+  "index.html",
+  "dashboard.html",
+  "user.html",
+  "styles.css",
+  "common.js",
+  "auth.js",
+  "dashboard.js",
+  "user.js",
+  "app.js"
+]);
 
 // Socket.IO attached to http server
 const io = new Server(server, {
@@ -27,6 +40,14 @@ mongoose.connect(process.env.MONGO_URI || "mongodb+srv://admin:admin123@trusteye
 // Routes
 const routes = require("./routes");
 app.use("/api", routes);
+app.use(express.static(frontendDir));
+app.get("/:frontendFile", (req, res, next) => {
+  const { frontendFile } = req.params;
+  if (!frontendFiles.has(frontendFile)) {
+    return next();
+  }
+  return res.sendFile(path.join(frontendDir, frontendFile));
+});
 
 // Socket.IO events
 io.on("connection", (socket) => {
@@ -43,7 +64,7 @@ app.set("sendAlert", (alertData) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("TrustEye running");
+  res.sendFile(path.join(frontendDir, "index.html"));
 });
 
 // Use server.listen instead of app.listen

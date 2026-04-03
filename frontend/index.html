@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrustEye Access Portal</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/common.js" defer></script>
+  <script src="/auth.js" defer></script>
+</head>
+<body class="page-auth">
+  <div class="grid-overlay"></div>
+  <div class="noise-overlay"></div>
+
+  <div class="page-shell auth-page-shell">
+    <section class="auth-stage">
+      <div class="auth-copy">
+        <span class="eyebrow">Cyber Defense Workspace</span>
+        <h1>TrustEye</h1>
+        <p class="lead">
+          Real-time anomaly detection for users, devices, downloads, and insider threat activity.
+        </p>
+
+        <div class="feature-stack">
+          <article class="cyber-card feature-card">
+            <span class="badge badge-critical">Live Alerting</span>
+            <h2>Security Operations Center style monitoring</h2>
+            <p>See risk spikes, anomaly streams, retrain events, and entity scores in one modern dashboard.</p>
+          </article>
+
+          <div class="feature-grid">
+            <article class="cyber-card mini-card">
+              <strong>Socket.IO</strong>
+              <p>Instant alert delivery from the backend.</p>
+            </article>
+            <article class="cyber-card mini-card">
+              <strong>Chart.js</strong>
+              <p>Risk and anomaly visuals for operators.</p>
+            </article>
+            <article class="cyber-card mini-card">
+              <strong>Simulation</strong>
+              <p>User and device actions can trigger ML scoring.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="cyber-card auth-card">
+        <div class="auth-card__header">
+          <span class="eyebrow">Mock Authentication</span>
+          <h2 id="authTitle">Login to TrustEye</h2>
+          <p id="authSubtitle">Sign in to the correct workspace. No real authentication is required.</p>
+        </div>
+
+        <div class="segmented-control" role="tablist" aria-label="Authentication mode">
+          <button type="button" class="segment-btn is-active" data-mode="login">Login</button>
+          <button type="button" class="segment-btn" data-mode="signup">Signup</button>
+        </div>
+
+        <form id="authForm" class="form-grid">
+          <label class="form-field">
+            <span>Email</span>
+            <input id="emailInput" type="email" name="email" placeholder="admin@trusteye.ai" required>
+          </label>
+
+          <label class="form-field">
+            <span>Password</span>
+            <input id="passwordInput" type="password" name="password" placeholder="Enter any password" required>
+          </label>
+
+          <label class="form-field">
+            <span>Role</span>
+            <select id="roleSelect" name="role">
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+          </label>
+
+          <button id="authSubmit" type="submit" class="button button-primary">Continue to Workspace</button>
+        </form>
+
+        <div class="auth-footer">
+          <p id="authHint">Admins open the SOC dashboard. Users open the activity simulator.</p>
+          <div class="status-inline">
+            <span class="live-dot"></span>
+            <span>Local storage session routing enabled</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="loader" class="loader-overlay is-hidden">
+    <div class="loader-spinner"></div>
+    <p id="loaderText">Working...</p>
+  </div>
+
+  <div id="toastStack" class="toast-stack" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

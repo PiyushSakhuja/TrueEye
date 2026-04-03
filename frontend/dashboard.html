@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrustEye Security Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/common.js" defer></script>
+  <script src="https://cdn.socket.io/4.8.3/socket.io.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="/dashboard.js" defer></script>
+</head>
+<body class="page-dashboard">
+  <div class="grid-overlay"></div>
+  <div class="noise-overlay"></div>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <div class="brand-mark">TE</div>
+        <div>
+          <span class="eyebrow">Security Platform</span>
+          <h1>TrustEye</h1>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#overview" class="nav-link is-active">Dashboard</a>
+        <a href="#logs" class="nav-link">Logs</a>
+        <a href="#controls" class="nav-link">Controls</a>
+      </nav>
+
+      <div class="cyber-card sidebar-card">
+        <span class="eyebrow">Session</span>
+        <strong id="sidebarUserName">Admin</strong>
+        <p id="sidebarUserEmail">admin@trusteye.ai</p>
+      </div>
+
+      <div class="cyber-card sidebar-card">
+        <div class="status-inline">
+          <span class="live-dot"></span>
+          <span id="socketState">Connecting to real-time stream...</span>
+        </div>
+        <div class="sidebar-metrics">
+          <div>
+            <span>Alert Count</span>
+            <strong id="alertCounter">0</strong>
+          </div>
+          <div>
+            <span>ML Feed</span>
+            <strong id="mlFeedStatus">Checking</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="cyber-card sidebar-card">
+        <span class="eyebrow">System Notes</span>
+        <ul class="mini-list">
+          <li>Socket alerts stream directly from the backend.</li>
+          <li>Charts refresh from scores and alert events.</li>
+          <li>Retrain completion lands here in real time.</li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main-shell">
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">Real-Time SOC</span>
+          <h2>TrustEye Security Dashboard</h2>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="user-pill">
+            <span id="topbarUser">Admin</span>
+            <small>Logged in</small>
+          </div>
+          <button id="refreshBtn" class="button button-secondary" type="button">Refresh</button>
+          <button id="logoutBtn" class="button button-ghost" type="button">Logout</button>
+        </div>
+      </header>
+
+      <section id="overview" class="stats-row">
+        <article class="cyber-card stat-card">
+          <span>Total Entities</span>
+          <strong id="entityCount">0</strong>
+          <p>Users and devices currently in the risk model.</p>
+        </article>
+        <article class="cyber-card stat-card">
+          <span>Average Risk</span>
+          <strong id="averageRisk">0%</strong>
+          <p>Blended score across the latest entity output.</p>
+        </article>
+        <article class="cyber-card stat-card">
+          <span>Anomalies</span>
+          <strong id="anomalyCount">0</strong>
+          <p>Live suspicious behaviors across logs and alerts.</p>
+        </article>
+        <article class="cyber-card stat-card">
+          <span>Top Entity</span>
+          <strong id="topEntity">None</strong>
+          <p id="topEntityMeta">Awaiting telemetry.</p>
+        </article>
+      </section>
+
+      <section class="workspace-grid">
+        <article class="cyber-card panel span-7">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Real-Time Alerts</span>
+              <h3>Security Alert Stream</h3>
+            </div>
+            <span class="counter-badge" id="alertBadge">0</span>
+          </div>
+          <div id="alertList" class="alert-list"></div>
+        </article>
+
+        <article class="cyber-card panel span-5">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Status</span>
+              <h3>Ops Status Feed</h3>
+            </div>
+          </div>
+          <div id="statusFeed" class="status-feed"></div>
+        </article>
+
+        <article class="cyber-card panel span-6">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Risk Visualization</span>
+              <h3>Risk Score Per Entity</h3>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="riskChart"></canvas>
+          </div>
+        </article>
+
+        <article class="cyber-card panel span-6">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Anomaly Timeline</span>
+              <h3>Alerts Over Time</h3>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="anomalyChart"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <section id="logs" class="cyber-card panel table-panel">
+        <div class="panel-header">
+          <div>
+            <span class="eyebrow">Logs</span>
+            <h3>Telemetry Log Table</h3>
+          </div>
+
+          <div class="table-toolbar">
+            <input id="logSearchInput" class="table-search" type="search" placeholder="Search entity or action">
+            <select id="logFilterSelect">
+              <option value="all">All Logs</option>
+              <option value="suspicious">Suspicious Only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Entity</th>
+                <th>Action</th>
+                <th>Context</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="logsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="controls" class="controls-grid">
+        <article class="cyber-card panel">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Controls</span>
+              <h3>Model and Data Controls</h3>
+            </div>
+          </div>
+
+          <div class="control-stack">
+            <label class="form-field">
+              <span>Generated log count</span>
+              <input id="generateCountInput" type="number" min="1" max="200" value="20">
+            </label>
+
+            <button id="generateBtn" class="button button-primary" type="button">Generate Logs</button>
+            <button id="scoreAllBtn" class="button button-secondary" type="button">Score All Logs</button>
+            <button id="retrainBtn" class="button button-danger" type="button">Retrain Model</button>
+          </div>
+        </article>
+
+        <article class="cyber-card panel">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Operator Notes</span>
+              <h3>Command Output</h3>
+            </div>
+          </div>
+
+          <div id="commandOutput" class="terminal-feed"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div id="loader" class="loader-overlay is-hidden">
+    <div class="loader-spinner"></div>
+    <p id="loaderText">Syncing telemetry...</p>
+  </div>
+
+  <div id="toastStack" class="toast-stack" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

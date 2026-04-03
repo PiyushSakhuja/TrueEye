@@ -3,64 +3,64 @@
     "entityId": "device_0",
     "risk_score": 100.0,
     "risk_level": "critical",
-    "total_logs": 7,
+    "total_logs": 24,
     "anomaly_count": 3,
-    "_id": "69cfc370867b73ceafecac3a"
+    "_id": "69d011905a34be0359f06113"
   },
   {
     "entityId": "device_1",
     "risk_score": 100.0,
     "risk_level": "critical",
-    "total_logs": 6,
-    "anomaly_count": 1,
-    "_id": "69cfc370867b73ceafecac3b"
+    "total_logs": 21,
+    "anomaly_count": 5,
+    "_id": "69d011905a34be0359f06114"
   },
   {
     "entityId": "device_2",
     "risk_score": 100.0,
     "risk_level": "critical",
-    "total_logs": 7,
-    "anomaly_count": 1,
-    "_id": "69cfc370867b73ceafecac3c"
+    "total_logs": 16,
+    "anomaly_count": 2,
+    "_id": "69d011905a34be0359f06115"
   },
   {
     "entityId": "user_0",
     "risk_score": 100.0,
     "risk_level": "critical",
-    "total_logs": 9,
-    "anomaly_count": 1,
-    "_id": "69cfc370867b73ceafecac3d"
+    "total_logs": 33,
+    "anomaly_count": 5,
+    "_id": "69d011905a34be0359f06116"
   },
   {
     "entityId": "user_1",
     "risk_score": 100.0,
     "risk_level": "critical",
-    "total_logs": 6,
-    "anomaly_count": 2,
-    "_id": "69cfc370867b73ceafecac3e"
+    "total_logs": 29,
+    "anomaly_count": 6,
+    "_id": "69d011905a34be0359f06117"
   },
   {
     "entityId": "user_2",
     "risk_score": 100.0,
     "risk_level": "critical",
-    "total_logs": 7,
-    "anomaly_count": 1,
-    "_id": "69cfc370867b73ceafecac3f"
+    "total_logs": 29,
+    "anomaly_count": 2,
+    "_id": "69d011905a34be0359f06118"
   },
   {
     "entityId": "user_3",
     "risk_score": 100.0,
     "risk_level": "critical",
-    "total_logs": 6,
-    "anomaly_count": 2,
-    "_id": "69cfc370867b73ceafecac40"
+    "total_logs": 32,
+    "anomaly_count": 5,
+    "_id": "69d011905a34be0359f06119"
   },
   {
     "entityId": "user_4",
     "risk_score": 100.0,
     "risk_level": "critical",
-    "total_logs": 12,
-    "anomaly_count": 1,
-    "_id": "69cfc370867b73ceafecac41"
+    "total_logs": 36,
+    "anomaly_count": 6,
+    "_id": "69d011905a34be0359f0611a"
   }
 ]

@@ -36,6 +36,8 @@ router.post("/score", async (req, res) => {
   try {
     const log = req.body;
 
+    await Log.create(log);
+
     // Call Python ML API
     const mlRes = await fetch(`${ML_API}/score-one`, {
       method:  "POST",
@@ -118,12 +120,38 @@ router.get("/scores", async (req, res) => {
 
 // ── Trigger model retrain ───────────────────────────────────────────────────
 router.post("/retrain", async (req, res) => {
+  const io = req.app.get("io");
+
   try {
-    const mlRes  = await fetch(`${ML_API}/retrain`, { method: "POST" });
-    const result = await mlRes.json();
-    res.json(result);
+    // 🔥 Step 1: respond immediately
+    res.json({
+      status: "Retrain started",
+      message: "Model is retraining in background (10-30s)"
+    });
+
+    // 🔥 Step 2: background call (fire-and-forget)
+    fetch(`${ML_API}/retrain`, {
+      method: "POST",
+      signal: AbortSignal.timeout(120000) // 2 min timeout
+    })
+      .then(async (mlRes) => {
+        const result = await mlRes.json();
+
+        console.log("Retrain complete:", result);
+
+        // 🔥 Step 3: notify frontend via socket
+        io.emit("retrain-complete", result);
+      })
+      .catch((err) => {
+        console.error("Retrain error:", err.message);
+
+        io.emit("retrain-failed", {
+          error: err.message
+        });
+      });
+
   } catch (err) {
-    res.status(500).json({ error: "ML API unreachable: " + err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 

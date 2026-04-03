@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrustEye User Simulator</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/common.js" defer></script>
+  <script src="/user.js" defer></script>
+</head>
+<body class="page-user">
+  <div class="grid-overlay"></div>
+  <div class="noise-overlay"></div>
+
+  <div class="dashboard-layout user-layout">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <div class="brand-mark">TE</div>
+        <div>
+          <span class="eyebrow">User Simulation</span>
+          <h1>TrustEye</h1>
+        </div>
+      </div>
+
+      <div class="cyber-card sidebar-card">
+        <span class="eyebrow">Identity</span>
+        <strong id="simDisplayName">User</strong>
+        <p id="simEmail">user@trusteye.ai</p>
+      </div>
+
+      <div class="cyber-card sidebar-card">
+        <span class="eyebrow">Mapped Entities</span>
+        <div class="sidebar-metrics">
+          <div>
+            <span>User Entity</span>
+            <strong id="simUserEntity">user_0</strong>
+          </div>
+          <div>
+            <span>Device Entity</span>
+            <strong id="simDeviceEntity">device_0</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="cyber-card sidebar-card">
+        <div class="toggle-row">
+          <div>
+            <span class="eyebrow">Stress Mode</span>
+            <p class="small-copy">Bias actions toward suspicious metadata.</p>
+          </div>
+          <label class="switch">
+            <input id="stressModeToggle" type="checkbox" checked>
+            <span class="switch-ui"></span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-shell">
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">Action Simulator</span>
+          <h2>TrustEye User Activity Console</h2>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="user-pill">
+            <span>User Workspace</span>
+            <small>ML scoring enabled</small>
+          </div>
+          <button id="logoutBtn" class="button button-ghost" type="button">Logout</button>
+        </div>
+      </header>
+
+      <section class="stats-row">
+        <article class="cyber-card stat-card">
+          <span>Last Risk Score</span>
+          <strong id="lastRiskScore">--</strong>
+          <p>Latest response returned by `/api/score`.</p>
+        </article>
+        <article class="cyber-card stat-card">
+          <span>Risk Level</span>
+          <strong id="lastRiskLevel">--</strong>
+          <p>Backend and ML assessment of the last action.</p>
+        </article>
+        <article class="cyber-card stat-card">
+          <span>Total Simulated Actions</span>
+          <strong id="actionCount">0</strong>
+          <p>Actions sent from this page in the current session.</p>
+        </article>
+        <article class="cyber-card stat-card">
+          <span>Stress Mode</span>
+          <strong id="stressModeStatus">On</strong>
+          <p>When enabled, payloads skew toward suspicious behavior.</p>
+        </article>
+      </section>
+
+      <section class="action-grid">
+        <article class="cyber-card action-card">
+          <span class="badge badge-low">User Action</span>
+          <h3>Login</h3>
+          <p>Generate a login event using user telemetry and device fingerprints.</p>
+          <button class="button button-primary action-trigger" data-action="login" type="button">Send Login</button>
+        </article>
+
+        <article class="cyber-card action-card">
+          <span class="badge badge-high">Sensitive</span>
+          <h3>Download File</h3>
+          <p>Simulate internal or external downloads with varying file sizes and access types.</p>
+          <button class="button button-primary action-trigger" data-action="download" type="button">Download File</button>
+        </article>
+
+        <article class="cyber-card action-card">
+          <span class="badge badge-medium">User Action</span>
+          <h3>Upload File</h3>
+          <p>Submit upload events with randomized destination and file metadata.</p>
+          <button class="button button-primary action-trigger" data-action="upload" type="button">Upload File</button>
+        </article>
+
+        <article class="cyber-card action-card">
+          <span class="badge badge-critical">Device Action</span>
+          <h3>Send Data</h3>
+          <p>Push large outbound telemetry to simulate suspicious device exfiltration.</p>
+          <button class="button button-danger action-trigger" data-action="send_data" type="button">Send Data</button>
+        </article>
+
+        <article class="cyber-card action-card">
+          <span class="badge badge-medium">Device Action</span>
+          <h3>Print Document</h3>
+          <p>Trigger document printing events with page-volume anomalies and device status.</p>
+          <button class="button button-secondary action-trigger" data-action="print" type="button">Print Document</button>
+        </article>
+      </section>
+
+      <section class="workspace-grid">
+        <article class="cyber-card panel span-6">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Latest Response</span>
+              <h3>ML Score Result</h3>
+            </div>
+          </div>
+          <div id="resultPanel" class="result-panel"></div>
+        </article>
+
+        <article class="cyber-card panel span-6">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Action Feed</span>
+              <h3>Recent Simulation Events</h3>
+            </div>
+          </div>
+          <div id="activityFeed" class="status-feed"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div id="loader" class="loader-overlay is-hidden">
+    <div class="loader-spinner"></div>
+    <p id="loaderText">Sending action to ML...</p>
+  </div>
+
+  <div id="toastStack" class="toast-stack" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
